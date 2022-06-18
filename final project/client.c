@@ -44,36 +44,34 @@ int main()
   {
     memset(buffer, 0, sizeof(buffer));
     memset(message, 0, sizeof(message));  
-    n = read(socketfd, buffer, sizeof(buffer));
+    read(socketfd, buffer, 255);
     printf("%s", buffer);
     scanf("%s", message);
     //send message to server
     write(socketfd, message, strlen(message));
     if(message[0] == '1'){
-        memset(buffer, 0, sizeof(buffer));
-        memset(message, 0, sizeof(message));
-        read(socketfd, buffer, strlen(buffer));
+        memset(buffer, 0, 255);
+        memset(message, 0, 255);
+        read(socketfd, buffer, 255);
         printf("%s", buffer);
-
         scanf("%s", message);
         write(socketfd, message, strlen(message));
 
-        memset(buffer, 0, sizeof(buffer));
-        read(socketfd, buffer, strlen(buffer));
-        printf("address get from domain name : %s\n\n", buffer);
+        memset(buffer, 0, 255);
+        read(socketfd, buffer, 255);
+        printf("address get from domain name : %s\n\n",buffer);
     }
     else if(message[0] == '2'){
         memset(buffer, 0, sizeof(buffer));
         memset(message, 0, sizeof(message));
-        read(socketfd, buffer, strlen(buffer));
+        read(socketfd, buffer, 255);
         printf("%s", buffer);
-
         scanf("%s", message);
         write(socketfd, message, strlen(message));
 
-        memset(buffer, 0, sizeof(buffer));
-        read(socketfd, buffer, strlen(buffer));
-        printf("Email get from domain name : %s\n\n", buffer);
+        memset(buffer, 0, 255);
+        read(socketfd, buffer, 255);
+        printf("Email get from server : %s\n\n",buffer);
     }
     else{
         memset(message, 0, sizeof(message));
