@@ -113,16 +113,15 @@ int main( int argc, char *argv[] ) {
                 }
                 // start to find out DNS
                 struct hostent *H;
-                struct in_addr **Addrlist;
+                //struct in_addr **Addrlist;
                 H = gethostbyname(response);
-                Addrlist = (struct in_addr**) H ->h_addr_list;
+                //Addrlist = (struct in_addr**) H ->h_addr_list;
                 if(H == NULL){
                     strcpy(message, "No such URL address");
                 }
                 else{
                     
-                    strcpy(message, inet_ntoa(*Addrlist[0]));
-                    break;
+                    strcpy(message, inet_ntoa(*((struct in_addr*)H->h_addr)));
                 }
                 write(newsockfd, message, strlen(message));
                 memset(message, 0, sizeof(message));
@@ -146,8 +145,7 @@ int main( int argc, char *argv[] ) {
                     if(strcmp(response, Data[i].student_ID) == 0){
                         strcpy(message, Data[i].student_email);
                         find = 1;
-                        if(find)
-                            break;
+                        break;
                     }
                 }
                 if(find){
