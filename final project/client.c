@@ -14,8 +14,8 @@ int main()
 {  
   struct sockaddr_in server;  
   int socketfd;  
-  char buffer[255];
-  char message[255];  
+  char buffer[256];
+  char message[256];  
   int n;  
   
   /* 製作 socket */  
@@ -42,39 +42,41 @@ int main()
   /* 從伺服器接受資料 */  
   while (1)
   {
-    memset(buffer, 0, sizeof(buffer));
-    memset(message, 0, sizeof(message));  
+    memset(buffer, 0, 256);
+    memset(message, 0, 256);  
     read(socketfd, buffer, 255);
     printf("%s", buffer);
     scanf("%s", message);
     //send message to server
     write(socketfd, message, strlen(message));
     if(message[0] == '1'){
-        memset(buffer, 0, 255);
-        memset(message, 0, 255);
+        memset(buffer, 0, 256);
+        memset(message, 0, 256);
         read(socketfd, buffer, 255);
         printf("%s", buffer);
         scanf("%s", message);
         write(socketfd, message, strlen(message));
 
-        memset(buffer, 0, 255);
+        memset(buffer, 0, 256);
+        memset(message, 0, 256);
         read(socketfd, buffer, 255);
         printf("address get from domain name : %s\n\n",buffer);
     }
     else if(message[0] == '2'){
-        memset(buffer, 0, sizeof(buffer));
-        memset(message, 0, sizeof(message));
+        memset(buffer, 0, 256);
+        memset(message, 0, 256);
         read(socketfd, buffer, 255);
         printf("%s", buffer);
         scanf("%s", message);
         write(socketfd, message, strlen(message));
 
-        memset(buffer, 0, 255);
+        memset(buffer, 0, 256);
+        memset(message, 0, 256);
         read(socketfd, buffer, 255);
         printf("Email get from server : %s\n\n",buffer);
     }
     else{
-        memset(message, 0, sizeof(message));
+        memset(message, 0, 256);
         break;
     }
 

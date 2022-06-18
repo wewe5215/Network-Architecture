@@ -19,7 +19,7 @@ int main( int argc, char *argv[] ) {
    // read in the data in query.txt
    FILE *fp;
    int student_amount = 0;
-   student Data[255];
+   student Data[256];
    //read data
    fp = fopen("query.txt", "r");
    while (fscanf(fp, "%s %s", Data[student_amount].student_ID
@@ -31,6 +31,8 @@ int main( int argc, char *argv[] ) {
 
    int sockfd, newsockfd, portno, clilen;
    char buffer[256];
+   char message[256];
+   char response[256];
    struct sockaddr_in serv_addr, cli_addr;
    int  n;
    
@@ -77,20 +79,19 @@ int main( int argc, char *argv[] ) {
         //the communication might continue 
         while (1)
         {
-            char message[255];
-            char response[255];
+            
 
             //initialize
-            memset(buffer, 0, sizeof(buffer));
-            memset(message, 0, sizeof(message));
-            memset(response, 0, sizeof(response));
+            memset(buffer, 0, 256);
+            memset(message, 0, 256);
+            memset(response, 0, 256);
             
             strcpy(message, "What's your requirement? 1.DNS 2.QUERY 3.QUIT : ");
             write(newsockfd, message, strlen(message));
-            memset(message, 0, sizeof(message));
+            memset(message, 0, 256);
             /* If connection is established then start communicating */
             
-            n = read( newsockfd,buffer,255 );
+            n = read( newsockfd,buffer,255);
             
             if (n < 0) {
                 perror("ERROR reading from socket");
@@ -99,13 +100,13 @@ int main( int argc, char *argv[] ) {
             // client's reaponse
             if(buffer[0] == '1'){
                 //initialize
-                memset(buffer, 0, sizeof(buffer));
+                memset(buffer, 0, 256);
                 /* Write a response to the client */
                 strcpy(message, "Input URL address : ");
                 write(newsockfd, message, strlen(message));
-                memset(message, 0, sizeof(message));
+                memset(message, 0, 256);
                 //read client's response
-                n = read( newsockfd,response,255 );
+                n = read( newsockfd,response,255);
             
                 if (n < 0) {
                     perror("ERROR reading from socket");
@@ -123,18 +124,18 @@ int main( int argc, char *argv[] ) {
                     
                     strcpy(message, inet_ntoa(*((struct in_addr*)H->h_addr)));
                 }
-                write(newsockfd, message, strlen(message));
-                memset(message, 0, sizeof(message));
+                write(newsockfd, message, 255);
+                memset(message, 0, 256);
                 
             }
             else if(buffer[0] == '2'){
 
-                memset(buffer, 0, sizeof(buffer));
+                memset(buffer, 0, 256);
                 strcpy(message, "Input student ID : ");
                 write(newsockfd, message, strlen(message));
-                memset(message, 0, sizeof(message));
+                memset(message, 0, 256);
                 //read client's response
-                n = read( newsockfd,response,255 );
+                n = read( newsockfd,response,255);
             
                 if (n < 0) {
                     perror("ERROR reading from socket");
@@ -149,24 +150,19 @@ int main( int argc, char *argv[] ) {
                     }
                 }
                 if(find){
-                    write(newsockfd, message, strlen(message));
-                    memset(message, 0, sizeof(message));
+                    write(newsockfd, message, 255);
+                    memset(message, 0, 256);
                 }
                 else{
                     strcpy(message, "No such student ID");
-                    write(newsockfd, message, strlen(message));
-                    memset(message, 0, sizeof(message));
+                    write(newsockfd, message, 255);
+                    memset(message, 0, 256);
 
                 }
             }
-            else if(buffer[0] == '3'){
-
-                memset(buffer, 0, sizeof(buffer));
-                break;
-            }
             else{
 
-                memset(buffer, 0, sizeof(buffer));
+                memset(buffer, 0, 256);
                 break;
             }
             //printf("Here is the message: %s\n",buffer);
